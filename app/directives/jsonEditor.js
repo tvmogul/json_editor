@@ -40,6 +40,22 @@
             $rootScope.editor.input = "";
         };
 
+        $rootScope.editor.prettify = function() {
+            if ($rootScope.editor.input && $rootScope.editor.validate()) {
+                var jsonInput = angular.fromJson($rootScope.editor.input);
+
+                $rootScope.editor.input = angular.toJson(jsonInput, true);
+            }
+        };
+
+        $rootScope.editor.minify = function() {
+            if ($rootScope.editor.input && $rootScope.editor.validate()) {
+                var jsonInput = angular.fromJson($rootScope.editor.input);
+
+                $rootScope.editor.input = angular.toJson(jsonInput, false);
+            }
+        };
+
         $rootScope.editor.setCaretPosition = function(event) {
             if (event) {
                 $rootScope.editor.caretPosition = event.target.selectionStart ? event.target.selectionStart : 0;
@@ -51,19 +67,11 @@
         };
 
         $rootScope.editor.onPrettifyButtonClick = function() {
-            if ($rootScope.editor.input && $rootScope.editor.validate()) {
-                var jsonInput = angular.fromJson($rootScope.editor.input);
-
-                $rootScope.editor.input = angular.toJson(jsonInput, true);
-            }
+            $rootScope.editor.prettify();
         };
 
         $rootScope.editor.onMinifyButtonClick = function() {
-            if ($rootScope.editor.input && $rootScope.editor.validate()) {
-                var jsonInput = angular.fromJson($rootScope.editor.input);
-
-                $rootScope.editor.input = angular.toJson(jsonInput, false);
-            }
+            $rootScope.editor.minify();
         };
     };
 
